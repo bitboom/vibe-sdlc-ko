@@ -96,28 +96,63 @@
         <section id="context" class="content-section">
           <p class="eyebrow">Context Engineering</p>
           <h2>진짜 실력은 컨텍스트 엔지니어링</h2>
-          <p>AI 에이전트의 품질은 모델 성능만으로 결정되지 않습니다. 어떤 파일을 읽게 할지, 어떤 요구사항을 우선할지, 어떤 테스트와 로그를 피드백으로 줄지, 어떤 제약을 절대 어기면 안 되는지 설계해야 합니다.</p>
-          <div class="callout"><strong>실무 적용:</strong> 좋은 컨텍스트는 “긴 프롬프트”가 아니라 “필요한 정보를 필요한 시점에 주는 시스템”입니다. 저장소 구조, 코딩 규칙, 테스트 명령, 실패 로그, 제품 의도, 금지 조건이 모두 컨텍스트입니다.</div>
+          <p>원문은 AI 코드 품질이 “프롬프트의 재치”보다 <strong>제공되는 컨텍스트의 품질</strong>에 더 크게 좌우된다고 봅니다. 컨텍스트 엔지니어링은 코드베이스, 아키텍처, 팀 관례, 제품 의도, 실행 제약을 에이전트가 사용할 수 있는 구조화된 정보로 바꾸는 일입니다.</p>
+          <div class="callout"><strong>핵심 주장:</strong> 좋은 질문은 “AI를 어떻게 속여서 좋은 코드를 쓰게 할까?”가 아니라 “새 팀원이 효과적으로 기여하려면 무엇을 알아야 하며, 그 지식을 AI가 쓸 수 있는 형태로 어떻게 인코딩할까?”입니다.</div>
+          <div class="context-grid">
+            <div><h3>Instructions</h3><p>에이전트의 역할, 목표, 운영 경계입니다. 무엇을 우선하고 무엇을 금지할지 정합니다.</p></div>
+            <div><h3>Knowledge</h3><p>문서, 아키텍처 다이어그램, 도메인 데이터처럼 검색·참조해야 하는 지식입니다.</p></div>
+            <div><h3>Memory</h3><p>방금 일어난 세션 로그와 프로젝트의 장기 상태를 함께 다루는 기억입니다.</p></div>
+            <div><h3>Examples</h3><p>few-shot 예시, 기존 코드 패턴, 팀이 선호하는 구현 스타일입니다.</p></div>
+            <div><h3>Tools</h3><p>에이전트가 호출할 수 있는 API, 스크립트, 외부 서비스와 그 사용 규칙입니다.</p></div>
+            <div><h3>Guardrails</h3><p>포맷 규칙, 안전 검증, 절대 어기면 안 되는 하드 제약입니다.</p></div>
+          </div>
+          <h3>Static Context vs Dynamic Context</h3>
+          <p><strong>Static context</strong>는 매번 로드되는 규칙입니다. 예를 들면 system instruction, <code>AGENTS.md</code>, <code>CLAUDE.md</code>, <code>GEMINI.md</code>, 전역 메모리, 페르소나 정의가 여기에 들어갑니다. 항상 적용되지만, 관련 없는 토큰도 매번 비용을 냅니다.</p>
+          <p><strong>Dynamic context</strong>는 필요할 때만 불러오는 정보입니다. task matching으로 로드되는 skill, 실행 중 얻는 tool result, RAG 문서, windowed session history가 여기에 해당합니다. 정보가 필요할 때만 비용을 내므로 더 효율적입니다.</p>
+          <p>따라서 무엇을 static으로 둘지, 무엇을 dynamic으로 둘지는 단순 설정이 아니라 아키텍처 결정입니다. static이 너무 많으면 신호가 희석되고, 너무 적으면 중요한 규칙을 잊습니다. 좋은 시스템은 이 경계를 버전 관리되는 설계 대상으로 다룹니다.</p>
+          <div class="callout"><strong>Agent Skills의 의미:</strong> 원문은 dynamic context를 관리하는 강력한 패턴으로 Agent Skills를 듭니다. 에이전트는 시작 시 가벼운 메타데이터만 보고, 작업이 맞을 때 전체 지침을 로드하고, 더 깊은 참고 자료는 필요할 때만 가져옵니다. 그래서 하나의 에이전트가 수십 개 전문 능력을 갖되, 실제 사용하는 능력의 토큰 비용만 지불할 수 있습니다.</div>
         </section>
 
         <section id="new-sdlc" class="content-section">
           <p class="eyebrow">New SDLC</p>
           <h2>AI가 바꾸는 새로운 SDLC</h2>
-          <div class="steps">
-            <div><span>1</span><h3>요구사항과 계획</h3><p>AI는 요구사항 초안을 만들고, 모호한 부분을 질문으로 드러내며, 작업을 더 작은 단위로 나눌 수 있습니다.</p></div>
-            <div><span>2</span><h3>설계와 아키텍처</h3><p>여러 설계안을 비교하고 영향 범위를 분석할 수 있지만, 최종 판단은 인간의 제품·운영 맥락이 필요합니다.</p></div>
-            <div><span>3</span><h3>구현</h3><p>에이전트는 다중 파일 변경, 리팩터링, 테스트 실행, PR 생성까지 수행합니다. 구현 속도는 크게 빨라집니다.</p></div>
-            <div><span>4</span><h3>테스트와 QA</h3><p>테스트 생성, 실패 재현, 로그 분석, 회귀 검증이 핵심 피드백 루프가 됩니다.</p></div>
-            <div><span>5</span><h3>리뷰와 배포</h3><p>리뷰는 “코드를 사람이 처음부터 읽는 일”에서 “AI가 만든 변경의 의도·위험·검증 결과를 확인하는 일”로 바뀝니다.</p></div>
-            <div><span>6</span><h3>유지보수와 진화</h3><p>에이전트는 기존 코드의 패턴을 학습하고, 변경 영향과 기술 부채를 더 빠르게 드러냅니다.</p></div>
+          <p>전통적인 SDLC는 지난 20년 동안 waterfall에서 agile, CI, DevOps, 지속 배포로 이동하며 이미 한 번 압축되었습니다. AI는 이 압축을 더 크게 밀어붙입니다. 구현은 몇 주에서 몇 시간으로 줄어들 수 있지만, 요구사항·아키텍처·검증은 여전히 인간의 판단 속도에 묶여 있습니다.</p>
+          <p>그래서 원문은 AI 시대의 SDLC를 “기존 프로세스의 더 빠른 버전”이 아니라 <strong>단계의 경계가 흐려지고, 반복 주기가 분 단위로 짧아지며, 개발자가 구현자에서 시스템 설계자와 품질 판단자로 이동하는 워크플로</strong>로 설명합니다.</p>
+          <div class="callout"><strong>변하지 않는 것:</strong> 원문은 2026년 중반 기준의 흐름이 12개월 뒤 달라질 수 있다고 말합니다. 다만 인간의 판단, 취향, AI 결과를 검증하는 능력은 계속 남는다고 봅니다.</div>
+          <div class="steps detailed">
+            <div><span>1</span><h3>요구사항과 계획</h3><p>AI는 제품 brief에서 user story를 만들고, 사람이 놓친 edge case를 찾고, 자연어 설명에서 API schema나 prototype을 생성합니다. 요구사항은 팀 간 hand-off 문서가 아니라, 인간과 AI가 대화하며 specification과 초기 구현을 동시에 만드는 과정이 됩니다.</p></div>
+            <div><span>2</span><h3>설계와 아키텍처</h3><p>아키텍처는 여전히 가장 인간 중심적인 단계입니다. consistency vs availability, complexity vs flexibility, build vs buy 같은 trade-off는 비즈니스 맥락과 장기 전략을 필요로 합니다. AI는 결정된 아키텍처를 일관된 boilerplate와 module pattern으로 구현하는 데 강합니다.</p></div>
+            <div><span>3</span><h3>구현</h3><p>최신 코딩 에이전트는 자연어 설명에서 기능 전체를 만들고, 복잡한 알고리즘과 multi-file change를 수행합니다. 다만 생산성 수치만 보면 안 됩니다. 검증·디버깅·수정 시간이 늘어 AI 사용자가 특정 작업에서 더 오래 걸린 연구도 있습니다. 구현 업무는 “작성”에서 “리뷰·가이드·검증”으로 바뀝니다.</p></div>
+            <div><span>4</span><h3>테스트와 QA</h3><p>AI 생성 코드는 최종 산출물뿐 아니라 그 과정도 평가해야 합니다. output evaluation은 컴파일과 테스트 통과를 확인하고, trajectory evaluation은 tool call과 중간 reasoning의 흐름을 봅니다. 테스트와 eval은 AI에게 “정답이 무엇인지” 알려주는 주요 의사소통 수단이 됩니다.</p></div>
+            <div><span>5</span><h3>코드 리뷰와 배포</h3><p>AI는 first-pass reviewer로 버그, 스타일 위반, 보안 취약점, 성능 문제를 먼저 잡을 수 있습니다. 하지만 설계·유지보수성·전략적 정합성은 여전히 인간 리뷰가 필요합니다. 배포 파이프라인도 AI-aware해져 위험 예측, health monitoring, 자동 rollback과 연결됩니다.</p></div>
+            <div><span>6</span><h3>유지보수와 진화</h3><p>AI는 낯선 legacy codebase를 읽고, 관련 파일을 찾고, 기존 패턴을 존중하며 변경을 적용합니다. “건드리기 너무 위험한 코드”를 refactor, framework migration, deprecated API update, test suite 현대화 대상으로 다시 열 수 있습니다.</p></div>
           </div>
+          <h3>Factory Model: 코드를 만드는 시스템 만들기</h3>
+          <p>원문은 이 변화를 factory model로 설명합니다. 현대 개발자의 1차 산출물은 코드 자체가 아니라 <strong>코드를 생산하는 시스템</strong>입니다. 이 시스템은 specification/context, agents, tests/quality gates, feedback loops, guardrails로 구성됩니다.</p>
+          <p>공장 관리자가 모든 부품을 손으로 만들지 않듯, 개발자는 assembly line을 설계하고 품질을 관리합니다. 성공 기준은 에이전트에게 단계별 지시를 많이 주는 것이 아니라, 무엇이 성공인지 명확히 정의하고 에이전트가 반복할 수 있게 만드는 데 있습니다.</p>
         </section>
 
         <section id="harness" class="content-section">
           <p class="eyebrow">Harness Engineering</p>
           <h2>모델 주변의 시스템을 설계하라</h2>
-          <p>화이트페이퍼가 말하는 하네스는 모델을 둘러싼 실행 환경입니다. 테스트, 샌드박스, 권한, 코드 검색, 빌드 명령, 리뷰 체크리스트, 배포 정책, 관찰성 등이 여기에 들어갑니다.</p>
-          <p>좋은 하네스는 에이전트의 자유도를 없애는 것이 아니라, 안전하게 빠르게 움직일 수 있는 레일을 깔아줍니다.</p>
+          <p>원문은 AI agent를 모델 그 자체로 보면 잘못된 투자로 이어진다고 경고합니다. 모델은 실행 중인 agent의 한 입력일 뿐입니다. prompt, tools, context policy, hooks, sandbox, sub-agents, observability까지 포함한 주변 장치가 바로 <strong>harness</strong>입니다.</p>
+          <blockquote>Agent = Model + Harness. 원시 모델은 agent가 아닙니다. 상태, 도구 실행, 피드백 루프, 강제 가능한 제약을 harness가 제공할 때 비로소 agent가 됩니다.</blockquote>
+          <div class="harness-grid">
+            <div><h3>Instructions & Rule Files</h3><p>AGENTS.md, CLAUDE.md, GEMINI.md, skill file, sub-agent prompt처럼 agent의 역할과 금지 조건을 정의하는 텍스트입니다.</p></div>
+            <div><h3>Tools</h3><p>agent가 호출할 수 있는 function, MCP server, API와 “언제/어떻게 호출할지”를 알려주는 설명입니다.</p></div>
+            <div><h3>Sandboxes</h3><p>코드가 실제로 실행되는 격리 환경입니다. 무엇에 접근할 수 있고 무엇은 접근할 수 없는지 정합니다.</p></div>
+            <div><h3>Orchestration Logic</h3><p>sub-agent spawning, model routing, specialist hand-off, 어떤 조건에서 어떤 agent가 움직일지 정하는 규칙입니다.</p></div>
+            <div><h3>Guardrails / Hooks</h3><p>tool call 전, file edit 후, commit 전처럼 lifecycle 지점에서 실행되는 결정론적 코드입니다. agent가 자주 잊지만 절대 잊으면 안 되는 것을 막습니다.</p></div>
+            <div><h3>Observability</h3><p>logs, traces, evaluations, cost/latency metering입니다. 관찰성이 없으면 agent가 잘하고 있는지 조용히 drift하는지 알 수 없습니다.</p></div>
+          </div>
+          <h3>SDLC 안에서 Harness가 하는 일</h3>
+          <div class="timeline">
+            <div><span>Configure</span><h3>요구사항·계획·아키텍처</h3><p>개발자는 production code가 작성되기 전에 instruction, rule file, architectural constraint, 접근 가능한 API/schema를 설정합니다. 여기서 agent가 깨면 안 되는 기본 규칙이 정해집니다.</p></div>
+            <div><span>Run</span><h3>구현</h3><p>모델이 코드를 만들 때 harness는 sandbox, execution environment, tools를 제공해 작업을 안전하고 생산적인 경계 안에 둡니다.</p></div>
+            <div><span>Loop</span><h3>테스트와 QA</h3><p>harness는 테스트를 실행할 수 있는 터미널과 환경을 제공하고, 실패 로그를 다시 모델에 돌려보냅니다. 이 구조가 “think → act → observe” 자기수정 루프를 만듭니다.</p></div>
+            <div><span>Observe</span><h3>리뷰·배포·유지보수</h3><p>commit 전 hard-coded password를 막는 hook, token cost와 latency 추적, agent drift 관찰, 배포 결정 감사가 harness의 역할이 됩니다.</p></div>
+          </div>
+          <p>따라서 vibe coding과 agentic engineering의 차이는 사용하는 도구 이름이 아닙니다. 같은 agent를 쓰더라도 harness를 얼마나 의도적으로 구성하고 적용하느냐가 차이를 만듭니다. agent가 실패했을 때 원문은 먼저 모델을 탓하지 말고 missing tool, vague rule, absent guardrail, noisy context window 같은 구성 실패를 의심하라고 말합니다.</p>
         </section>
 
         <section id="roles" class="content-section">

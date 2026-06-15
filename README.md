@@ -14,15 +14,16 @@ Kaggle whitepaper **The New SDLC With Vibe Coding**를 한국어로 구조화한
 
 - Executive Summary
 - Vibe Coding vs Agentic Engineering
-- Context Engineering
-- 새로운 SDLC
-- Harness Engineering
+- Context Engineering: 6가지 context, static/dynamic context, Agent Skills
+- 새로운 SDLC: 요구사항, 설계, 구현, 테스트/QA, 리뷰/배포, 유지보수
+- Factory Model
+- Harness Engineering: Agent = Model + Harness, harness 구성 요소, SDLC 적용
 - 개발자 역할 변화
 - AI 개발의 경제학
 - 시작 가이드
 - 용어집
 
-전체 51페이지 완역은 후속 단계에서 섹션별로 확장합니다.
+전체 51페이지 완역은 후속 단계에서 섹션별로 확장합니다. 현재는 핵심 섹션을 원문 기반으로 구조화한 reading guide입니다.
 
 ## 기술 구성
 
