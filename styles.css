@@ -127,5 +127,5 @@ blockquote { margin: 28px 0; padding: 26px 28px; border-left: 4px solid var(--br
   h1 { font-size: 2.65rem; }
   h2 { font-size: 2rem; }
   .content-section { padding: 42px 0; }
-  .card, .panel, .callout, .steps > div, .glossary > div { padding: 20px; border-radius: 18px; }
+  .card, .panel, .callout, .steps > div, .context-grid > div, .harness-grid > div, .timeline > div, .glossary > div { padding: 20px; border-radius: 18px; }
 }

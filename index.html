@@ -158,27 +158,49 @@
         <section id="roles" class="content-section">
           <p class="eyebrow">Developer Role</p>
           <h2>개발자는 컨덕터와 오케스트레이터가 된다</h2>
-          <p><strong>컨덕터</strong>는 실시간으로 에이전트를 지휘합니다. 방향을 잡고, 결과를 보고, 다시 지시합니다. <strong>오케스트레이터</strong>는 여러 에이전트에게 작업을 나누어 맡기고, 결과를 합치고, 충돌을 해결합니다.</p>
-          <p>이 변화는 개발자가 덜 중요해진다는 뜻이 아닙니다. 오히려 무엇을 만들지, 어떤 품질 기준을 세울지, 어떤 위험을 막을지 판단하는 능력이 더 중요해집니다.</p>
+          <p>원문은 AI가 구현 업무를 더 많이 맡을수록 개발자가 두 가지 모드 사이를 오간다고 설명합니다. 하나는 IDE 안에서 AI와 실시간으로 호흡하는 <strong>컨덕터</strong>, 다른 하나는 여러 에이전트에게 비동기 작업을 맡기고 결과를 검토하는 <strong>오케스트레이터</strong>입니다.</p>
+          <div class="compare">
+            <div class="panel"><h3>Conductor: 실시간 지휘</h3><p>복잡한 로직, 까다로운 디버깅, 낯선 코드베이스처럼 변경 과정을 직접 이해해야 할 때 적합합니다. 개발자는 코드가 만들어지는 과정을 보며 프롬프트와 수정 지시로 세밀하게 방향을 잡습니다.</p></div>
+            <div class="panel"><h3>Orchestrator: 비동기 위임</h3><p>잘 정의된 버그 수정, 기존 패턴을 따르는 기능 구현, 테스트 생성, 마이그레이션처럼 목표와 검증 기준이 명확한 작업에 적합합니다. 에이전트는 백그라운드나 샌드박스에서 병렬로 일하고, 개발자는 결과를 주기적으로 검토합니다.</p></div>
+          </div>
+          <p>오케스트레이터 모드에서는 문법 지식보다 <strong>명세 작성, 작업 분해, 결과 평가, 시스템 설계</strong>가 더 중요해집니다. 즉 개발자의 가치는 “얼마나 빨리 코드를 치는가”에서 “무엇을 시킬지, 어떤 단위로 나눌지, 무엇을 통과 기준으로 볼지”로 이동합니다.</p>
+
+          <h3>The 80% Problem</h3>
+          <p>AI 에이전트는 기능의 약 80%를 빠르게 만들어낼 수 있지만, 남은 20%—edge case, error handling, integration point, 미묘한 correctness requirement—는 여전히 깊은 맥락 지식을 요구합니다. 이 마지막 20%가 운영 품질을 결정합니다.</p>
+          <div class="callout"><strong>중요한 위험:</strong> AI 오류는 더 이상 단순 syntax error에 머물지 않습니다. 비즈니스 로직에 대한 잘못된 가정, 모호한 요구사항에 대한 확인 누락, 빠진 edge case, 장기 유지보수 부담을 만드는 아키텍처 결정처럼 “겉보기에는 맞아 보이는” 개념적 실패가 더 문제입니다.</div>
+          <p>원문이 권하는 자세는 AI 결과를 모두 받아들이는 것이 아닙니다. AI가 잘하는 <strong>명확한 작업의 빠른 구현</strong>은 맡기되, 인간의 주의는 <strong>모호한 요구사항, 아키텍처 trade-off, correctness 검증</strong>에 집중하는 것입니다. 더 빨라지는 방법은 덜 검토하는 것이 아니라, 전문가의 시간을 가장 위험한 부분에 배치하는 것입니다.</p>
         </section>
 
         <section id="economics" class="content-section">
           <p class="eyebrow">Economics</p>
           <h2>AI 개발의 경제학</h2>
+          <p>원문은 AI 개발의 효과를 “개발자가 코드를 얼마나 빨리 쓰는가”로만 보면 부족하다고 말합니다. 엔지니어링 리더에게 더 중요한 지표는 <strong>Total Cost of Ownership, TCO</strong>입니다. AI 워크플로는 초기 투자 비용인 CapEx와 운영·수정·유지보수 비용인 OpEx의 분포를 바꿉니다.</p>
           <div class="compare">
-            <div class="panel"><h3>Vibe Coding의 숨은 부채</h3><p>초기 비용은 낮습니다. 하지만 맥락, 테스트, 설계 없이 만든 코드는 나중에 이해·수정·검증하는 비용이 커질 수 있습니다.</p></div>
-            <div class="panel"><h3>Agentic Engineering의 투자</h3><p>초기에 하네스와 컨텍스트를 설계하는 비용이 듭니다. 대신 반복 작업이 안정화되고, 장기적으로 운영 비용이 낮아집니다.</p></div>
+            <div class="panel warning"><h3>Vibe Coding: 낮은 CapEx, 높은 OpEx</h3><p>시작 비용은 거의 없습니다. 구독형 AI 도구와 몇 줄의 프롬프트만 있으면 됩니다. 하지만 구조화되지 않은 파일을 계속 context window에 넣고, 검증되지 않은 결과를 다시 고치게 만드는 prompting loop는 token burn rate를 높이고 first-pass success rate를 낮춥니다.</p></div>
+            <div class="panel success"><h3>Agentic Engineering: 높은 CapEx, 낮은 OpEx</h3><p>초기에는 API schema, deterministic test suite, agent context, guardrail을 설계하는 비용이 듭니다. 대신 에이전트가 governed factory 안에서 동작하므로 산출물은 더 일관되고, 사전 테스트되며, 회사 표준에 맞춰집니다.</p></div>
           </div>
+          <div class="context-grid">
+            <div><h3>Token Burn Rate</h3><p>모든 입력·출력 토큰은 비용입니다. 관련 없는 대형 context를 매번 넣는 방식은 규모가 커질수록 경제적으로 버티기 어렵습니다.</p></div>
+            <div><h3>Maintenance Tax</h3><p>ad-hoc prompting으로 만든 코드는 구조적 일관성이 약할 수 있습니다. 6개월 뒤 버그가 나면 사람이 AI-generated spaghetti code를 역공학해야 합니다.</p></div>
+            <div><h3>Security Remediation</h3><p>평가 하네스 없이 빠르게 만든 코드는 취약점도 빠르게 만듭니다. production에서 보안 결함을 고치는 비용은 설계 단계에서 잡는 비용보다 훨씬 큽니다.</p></div>
+            <div><h3>Model Routing</h3><p>잘 설계된 factory model은 모든 작업에 frontier model을 쓰지 않습니다. 요구사항·아키텍처 같은 복잡한 작업에는 강한 모델을, 테스트 생성·리뷰·CI 모니터링에는 더 작고 빠른 모델을 배치합니다.</p></div>
+          </div>
+          <div class="callout"><strong>Context Engineering은 재무 전략입니다:</strong> 모델에 보내는 정보는 모두 비용입니다. 정확한 <code>AGENTS.md</code>, 아키텍처 가드레일, 동적 skill/tool 호출로 high-signal payload를 만들면 시행착오 루프를 줄이고 운영 토큰 비용을 낮출 수 있습니다.</div>
         </section>
 
         <section id="start" class="content-section">
           <p class="eyebrow">Where to Start</p>
           <h2>어디서 시작할까</h2>
-          <ul class="checklist">
-            <li><strong>개인 개발자:</strong> 작은 기능, 테스트가 있는 코드, 되돌리기 쉬운 작업부터 에이전트에 맡깁니다.</li>
-            <li><strong>엔지니어링 리더:</strong> 팀의 공통 프롬프트보다 저장소 규칙, 테스트 명령, 리뷰 기준, 안전장치를 먼저 표준화합니다.</li>
-            <li><strong>조직:</strong> AI 사용량보다 품질 지표, 배포 안정성, 보안 검토, 기술 부채 감소를 함께 측정합니다.</li>
-          </ul>
+          <p>원문은 AI가 “도입하면 생산성이 자동으로 오르는 기능”이 아니라, 이미 있는 엔지니어링 문화를 증폭한다고 봅니다. 테스트·리뷰·아키텍처 기준이 강한 팀은 더 큰 효과를 얻고, 기준이 약한 팀은 부채도 더 빠르게 쌓입니다.</p>
+          <div class="steps detailed">
+            <div><span>1</span><h3>개인 개발자</h3><p>프로젝트에 <code>AGENTS.md</code> 또는 동등한 규칙 파일을 만듭니다. 처음에는 stack, convention, hard rule, workflow를 10줄 정도로 시작하고, 에이전트가 반복해서 실수한 내용을 규칙으로 추가합니다.</p></div>
+            <div><span>2</span><h3>작은 workflow부터</h3><p>반복되는 코드 리뷰, 리서치, 정기 리포트, 테스트 생성처럼 작고 검증 가능한 workflow 하나를 첫 agent 대상으로 고릅니다. 하나를 끝까지 build-evaluate-deploy 해보는 경험이 가장 빠른 학습입니다.</p></div>
+            <div><span>3</span><h3>테스트와 eval 먼저</h3><p>코드를 생성하기 전에 테스트와 eval을 작성합니다. 테스트와 eval은 AI에게 의도를 전달하는 계약이며, 자연어 프롬프트보다 더 정확하게 “무엇이 성공인지”를 정의합니다.</p></div>
+            <div><span>4</span><h3>리더는 eval 기준을 세운다</h3><p>demo는 한 번 성공했다는 증거일 뿐입니다. 공유 workflow에 들어갈 agent라면 task success, tool use quality, trajectory compliance, hallucination, response quality에 대한 명시적 rubric이 필요합니다.</p></div>
+            <div><span>5</span><h3>생산 작업과 탐색 작업을 구분한다</h3><p>vibe coding은 탐색 속도에 맞고, agentic engineering은 production discipline에 맞습니다. 어떤 프로젝트·브랜치·환경에서 어떤 모드를 허용할지 팀 규범으로 분리해야 prototype이 우연히 production이 되는 일을 막을 수 있습니다.</p></div>
+            <div><span>6</span><h3>조직은 substrate를 먼저 만든다</h3><p>production agent를 확장하기 전 trajectory/final-response eval, run trace, scoped permission, generated code failure mode에 맞춘 security review를 준비해야 합니다. agent는 이제 단순 도구가 아니라 workflow 참여자입니다.</p></div>
+          </div>
+          <blockquote>Structure scales, vibes don't. 구조는 확장되지만 감은 확장되지 않습니다. 탐색에는 바이브 코딩이 유효하지만, 조직이 의존하는 소프트웨어에는 specification, tests, guardrails, human oversight가 선택 사항이 아닙니다.</blockquote>
         </section>
 
         <section id="terms" class="content-section">
@@ -189,6 +211,11 @@
             <div><dt>Agentic Engineering</dt><dd>AI 에이전트를 구현 엔진으로 활용하되, 인간이 아키텍처·테스트·제약·리뷰 루프를 설계하는 실무형 접근입니다.</dd></div>
             <div><dt>Context Engineering</dt><dd>모델이 올바른 결정을 하도록 필요한 맥락을 선별, 압축, 제공하는 기술입니다.</dd></div>
             <div><dt>Harness Engineering</dt><dd>에이전트가 안전하게 작업하도록 감싸는 테스트, 샌드박스, 권한, 피드백, 배포 체계의 설계입니다.</dd></div>
+            <div><dt>Conductor</dt><dd>개발자가 IDE 안에서 AI와 실시간으로 상호작용하며 세밀하게 방향을 잡는 작업 모드입니다.</dd></div>
+            <div><dt>Orchestrator</dt><dd>여러 에이전트나 백그라운드 작업에 목표를 위임하고, 결과를 검토·통합하는 작업 모드입니다.</dd></div>
+            <div><dt>The 80% Problem</dt><dd>AI가 기능의 대부분은 빠르게 만들지만, 마지막 edge case와 correctness 검증에는 인간의 맥락 지식이 필요하다는 문제입니다.</dd></div>
+            <div><dt>TCO / CapEx / OpEx</dt><dd>AI 개발 비용을 초기 구축 비용과 장기 운영·유지보수 비용으로 나누어 보는 경제적 관점입니다.</dd></div>
+            <div><dt>Model Routing</dt><dd>작업 난이도와 비용에 따라 강한 모델과 작은 모델을 적절히 배치하는 운영 전략입니다.</dd></div>
           </dl>
         </section>
 
