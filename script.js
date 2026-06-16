@@ -30,3 +30,32 @@ const observer = new IntersectionObserver(entries => {
 }, { rootMargin: '-20% 0px -65% 0px', threshold: [0, .2, .6] });
 
 sections.forEach(section => observer.observe(section));
+
+const tocToggle = document.querySelector('.toc-toggle');
+const tocBackdrop = document.querySelector('.toc-backdrop');
+const toc = document.getElementById('site-toc');
+
+function setTocOpen(open) {
+  if (!tocToggle || !tocBackdrop || !toc) return;
+  document.body.classList.toggle('toc-open', open);
+  tocToggle.setAttribute('aria-expanded', String(open));
+  tocBackdrop.hidden = !open;
+  toc.setAttribute('aria-hidden', String(!open && window.matchMedia('(max-width: 900px)').matches));
+}
+
+if (tocToggle && tocBackdrop && toc) {
+  tocToggle.addEventListener('click', () => {
+    setTocOpen(!document.body.classList.contains('toc-open'));
+  });
+  tocBackdrop.addEventListener('click', () => setTocOpen(false));
+  toc.addEventListener('click', event => {
+    if (event.target.closest('a')) setTocOpen(false);
+  });
+  window.addEventListener('keydown', event => {
+    if (event.key === 'Escape') setTocOpen(false);
+  });
+  window.addEventListener('resize', () => {
+    if (!window.matchMedia('(max-width: 900px)').matches) setTocOpen(false);
+  });
+  setTocOpen(false);
+}
