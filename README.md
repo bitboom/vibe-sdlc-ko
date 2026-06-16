@@ -2,8 +2,8 @@
 
 > Kaggle 화이트페이퍼 **The New SDLC With Vibe Coding**을 한국어 독자를 위해 구조화한 문서형 읽기 가이드입니다.
 
-**웹사이트:** https://bitboom.github.io/vibe-sdlc-ko/
-**원문:** https://www.kaggle.com/whitepaper-the-new-SDLC-with-vibe-coding
+- **웹사이트:** https://bitboom.github.io/vibe-sdlc-ko/
+- **원문:** https://www.kaggle.com/whitepaper-the-new-SDLC-with-vibe-coding
 
 ## 이 프로젝트는 무엇인가요?
 
