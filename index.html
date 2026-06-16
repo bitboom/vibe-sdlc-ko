@@ -84,6 +84,7 @@
         <a href="#context">Context Engineering</a>
         <a href="#new-sdlc">새로운 SDLC</a>
         <a href="#harness">Harness Engineering</a>
+        <a href="#evaluation">Evaluation</a>
         <a href="#roles">개발자의 역할 변화</a>
         <a href="#economics">경제학</a>
         <a href="#start">어디서 시작할까</a>
@@ -128,21 +129,27 @@
           <p class="eyebrow">Context Engineering</p>
           <h2>진짜 실력은 컨텍스트 엔지니어링</h2>
           <p>원문은 AI 코드 품질이 “프롬프트의 재치”보다 <strong>제공되는 컨텍스트의 품질</strong>에 더 크게 좌우된다고 봅니다. 컨텍스트 엔지니어링은 코드베이스, 아키텍처, 팀 관례, 제품 의도, 실행 제약을 에이전트가 사용할 수 있는 구조화된 정보로 바꾸는 일입니다.</p>
+          <p>즉 핵심은 모델을 말재주로 설득하는 것이 아니라, 숙련된 새 팀원이 좋은 일을 하려면 알아야 할 지식을 에이전트가 사용할 수 있는 형태로 제공하는 것입니다. 이 관점이 prompt engineering에서 context engineering으로의 이동을 설명합니다.</p>
           <div class="callout"><strong>핵심 주장:</strong> 좋은 질문은 “AI를 어떻게 속여서 좋은 코드를 쓰게 할까?”가 아니라 “새 팀원이 효과적으로 기여하려면 무엇을 알아야 하며, 그 지식을 AI가 쓸 수 있는 형태로 어떻게 인코딩할까?”입니다.</div>
           <div class="context-grid">
-            <div><h3>Instructions</h3><p>에이전트의 역할, 목표, 운영 경계입니다. 무엇을 우선하고 무엇을 금지할지 정합니다.</p></div>
-            <div><h3>Knowledge</h3><p>문서, 아키텍처 다이어그램, 도메인 데이터처럼 검색·참조해야 하는 지식입니다.</p></div>
-            <div><h3>Memory</h3><p>방금 일어난 세션 로그와 프로젝트의 장기 상태를 함께 다루는 기억입니다.</p></div>
-            <div><h3>Examples</h3><p>few-shot 예시, 기존 코드 패턴, 팀이 선호하는 구현 스타일입니다.</p></div>
-            <div><h3>Tools</h3><p>에이전트가 호출할 수 있는 API, 스크립트, 외부 서비스와 그 사용 규칙입니다.</p></div>
-            <div><h3>Guardrails</h3><p>포맷 규칙, 안전 검증, 절대 어기면 안 되는 하드 제약입니다.</p></div>
+            <div><h3>Instructions</h3><p>에이전트의 역할, 목표, 운영 경계입니다. 무엇을 우선하고 무엇을 금지할지 정합니다. 예: 이 저장소에서는 테스트 없는 기능 추가를 금지한다.</p></div>
+            <div><h3>Knowledge</h3><p>문서, 아키텍처 다이어그램, 도메인 데이터처럼 검색·참조해야 하는 지식입니다. 예: API schema, 제품 정책, 데이터 모델 설명.</p></div>
+            <div><h3>Memory</h3><p>방금 일어난 세션 로그와 프로젝트의 장기 상태를 함께 다루는 기억입니다. 단기 기억은 현재 작업 맥락, 장기 기억은 프로젝트의 안정된 사실을 담습니다.</p></div>
+            <div><h3>Examples</h3><p>few-shot 예시, 기존 코드 패턴, 팀이 선호하는 구현 스타일입니다. 좋은 예시는 자연어 규칙보다 강하게 “이렇게 하라”는 신호를 줍니다.</p></div>
+            <div><h3>Tools</h3><p>에이전트가 호출할 수 있는 API, 스크립트, 외부 서비스와 그 사용 규칙입니다. tool 설명은 단순 목록이 아니라 언제 써야 하는지까지 알려야 합니다.</p></div>
+            <div><h3>Guardrails</h3><p>포맷 규칙, 안전 검증, 절대 어기면 안 되는 하드 제약입니다. secret commit 차단, 권한 범위, 배포 전 테스트 같은 규칙이 여기에 속합니다.</p></div>
           </div>
           <h3>Static Context vs Dynamic Context</h3>
           <p><strong>Static context</strong>는 매번 로드되는 규칙입니다. 예를 들면 system instruction, <code>AGENTS.md</code>, <code>CLAUDE.md</code>, <code>GEMINI.md</code>, 전역 메모리, 페르소나 정의가 여기에 들어갑니다. 항상 적용되지만, 관련 없는 토큰도 매번 비용을 냅니다.</p>
           <p><strong>Dynamic context</strong>는 필요할 때만 불러오는 정보입니다. task matching으로 로드되는 skill, 실행 중 얻는 tool result, RAG 문서, windowed session history가 여기에 해당합니다. 정보가 필요할 때만 비용을 내므로 더 효율적입니다.</p>
-          <p>따라서 무엇을 static으로 둘지, 무엇을 dynamic으로 둘지는 단순 설정이 아니라 아키텍처 결정입니다. static이 너무 많으면 신호가 희석되고, 너무 적으면 중요한 규칙을 잊습니다. 좋은 시스템은 이 경계를 버전 관리되는 설계 대상으로 다룹니다.</p>
+          <p>따라서 무엇을 static으로 둘지, 무엇을 dynamic으로 둘지는 단순 설정이 아니라 아키텍처 결정입니다. static이 너무 많으면 토큰을 낭비하고 신호가 희석됩니다. 너무 적으면 agent가 반드시 지켜야 할 규칙을 잊습니다. 좋은 시스템은 이 경계를 코드처럼 리뷰하고 버전 관리합니다.</p>
+          <div class="compare">
+            <div class="panel warning"><h3>과도한 static context</h3><p>모든 정책, 예외, 레퍼런스를 시작 프롬프트에 넣으면 매 호출 비용이 커지고 중요한 신호가 묻힙니다. 오래된 규칙이 계속 남아 context rot도 생깁니다.</p></div>
+            <div class="panel success"><h3>잘 설계된 dynamic context</h3><p>task metadata로 필요한 skill만 열고, 실행 중 필요한 문서와 tool result만 가져옵니다. 에이전트는 가벼운 generalist로 시작해 필요할 때 specialist가 됩니다.</p></div>
+          </div>
           <div class="callout"><strong>Agent Skills의 의미:</strong> 원문은 dynamic context를 관리하는 강력한 패턴으로 Agent Skills를 듭니다. 에이전트는 시작 시 가벼운 메타데이터만 보고, 작업이 맞을 때 전체 지침을 로드하고, 더 깊은 참고 자료는 필요할 때만 가져옵니다. 그래서 하나의 에이전트가 수십 개 전문 능력을 갖되, 실제 사용하는 능력의 토큰 비용만 지불할 수 있습니다.</div>
-          <div class="takeaway"><span>이 섹션에서 기억할 것</span><p>컨텍스트는 더 많이 넣는 것이 아니라, 필요한 순간에 필요한 정보만 정확히 넣는 설계 문제입니다.</p></div>
+          <p>Agent Skills가 해결하는 문제도 명확합니다. overloaded prompt가 만드는 <strong>context rot</strong>, LLM에 절차적 기억이 없는 문제, multi-agent 운영 오버헤드, 도구·벤더 간 지식 재사용성 부족을 줄입니다. 그래서 skill은 단순 프롬프트 조각이 아니라 팀의 절차 지식을 패키징하는 단위에 가깝습니다.</p>
+          <div class="takeaway"><span>이 섹션에서 기억할 것</span><p>컨텍스트는 더 많이 넣는 것이 아니라, 필요한 순간에 필요한 정보만 정확히 넣는 설계 문제입니다. Context Engineering은 vibe coding을 agentic engineering으로 바꾸는 다리입니다.</p></div>
         </section>
 
         <section id="new-sdlc" class="content-section">
@@ -168,7 +175,8 @@
         <section id="harness" class="content-section">
           <p class="eyebrow">Harness Engineering</p>
           <h2>모델 주변의 시스템을 설계하라</h2>
-          <p>원문은 AI agent를 모델 그 자체로 보면 잘못된 투자로 이어진다고 경고합니다. 모델은 실행 중인 agent의 한 입력일 뿐입니다. prompt, tools, context policy, hooks, sandbox, sub-agents, observability까지 포함한 주변 장치가 바로 <strong>harness</strong>입니다.</p>
+          <p>원문은 AI agent를 모델 그 자체로 보면 잘못된 투자로 이어진다고 경고합니다. 새 모델이 나오면 agent가 좋아지고, 오래된 모델이면 agent가 나빠진다고 설명해버리기 쉽지만, 실제 운영 품질은 그보다 넓은 시스템에 의해 결정됩니다.</p>
+          <p>모델은 실행 중인 agent의 한 입력일 뿐입니다. prompt, tools, context policy, hooks, sandbox, sub-agents, observability까지 포함한 주변 장치가 바로 <strong>harness</strong>입니다. 팀이 투자해야 할 표면적도 이 harness입니다.</p>
           <blockquote>Agent = Model + Harness. 원시 모델은 agent가 아닙니다. 상태, 도구 실행, 피드백 루프, 강제 가능한 제약을 harness가 제공할 때 비로소 agent가 됩니다.</blockquote>
           <div class="harness-grid">
             <div><h3>Instructions & Rule Files</h3><p>AGENTS.md, CLAUDE.md, GEMINI.md, skill file, sub-agent prompt처럼 agent의 역할과 금지 조건을 정의하는 텍스트입니다.</p></div>
@@ -186,7 +194,27 @@
             <div><span>Observe</span><h3>리뷰·배포·유지보수</h3><p>commit 전 hard-coded password를 막는 hook, token cost와 latency 추적, agent drift 관찰, 배포 결정 감사가 harness의 역할이 됩니다.</p></div>
           </div>
           <p>따라서 vibe coding과 agentic engineering의 차이는 사용하는 도구 이름이 아닙니다. 같은 agent를 쓰더라도 harness를 얼마나 의도적으로 구성하고 적용하느냐가 차이를 만듭니다. agent가 실패했을 때 원문은 먼저 모델을 탓하지 말고 missing tool, vague rule, absent guardrail, noisy context window 같은 구성 실패를 의심하라고 말합니다.</p>
+          <div class="callout"><strong>팀의 자산으로서 harness:</strong> 재사용 가능한 rule file, skill library, MCP 연결, evaluation harness는 프로젝트를 넘어서 복리처럼 쌓입니다. 잘 만든 harness를 한 번 만들고 여러 번 개선하는 팀이 AI-assisted development에서 더 큰 가치를 얻습니다.</div>
           <div class="takeaway"><span>이 섹션에서 기억할 것</span><p>agent 품질은 모델만의 함수가 아닙니다. tools, sandbox, hooks, observability까지 포함한 harness가 실무 품질을 만듭니다.</p></div>
+        </section>
+
+        <section id="evaluation" class="content-section">
+          <p class="eyebrow">Evaluation</p>
+          <h2>데모가 아니라 평가 기준을 세워라</h2>
+          <p>원문은 vibe coding과 agentic engineering을 가르는 가장 큰 차이로 <strong>검증 방식</strong>을 듭니다. vibe coding에서는 “실행해보니 그럴듯하다”가 검증이 될 수 있지만, production workflow에서는 충분하지 않습니다.</p>
+          <p>Agentic Engineering에서는 두 가지 검증이 함께 필요합니다. <strong>Tests</strong>는 결정론적인 부분을 확인합니다. 같은 입력에 같은 출력이 나오는지, 함수가 계약을 지키는지, 빌드와 타입 검사가 통과하는지를 코드가 판단합니다. 반면 <strong>Evaluations</strong>는 비결정적인 부분을 봅니다. agent가 적절한 tool을 골랐는지, 올바른 경로로 작업했는지, 최종 응답이 품질 기준을 만족하는지를 rubric, labelled dataset, LM judge로 판단합니다.</p>
+          <div class="compare">
+            <div class="panel"><h3>Output Evaluation</h3><p>최종 산출물이 요구사항을 만족하는지 봅니다. 테스트 통과, 빌드 성공, API 계약 준수, 응답 품질, hallucination 여부처럼 결과물 중심의 평가입니다.</p></div>
+            <div class="panel"><h3>Trajectory Evaluation</h3><p>결과뿐 아니라 과정도 봅니다. agent가 올바른 파일을 읽었는지, 위험한 tool을 쓰지 않았는지, 실패 로그를 보고 수정했는지 같은 tool-use 경로와 compliance를 평가합니다.</p></div>
+          </div>
+          <div class="context-grid">
+            <div><h3>Task Success</h3><p>요구된 작업을 실제로 끝냈는지 평가합니다. “컴파일된다”와 “요구사항을 만족한다”는 다르기 때문에 success criterion을 명시해야 합니다.</p></div>
+            <div><h3>Tool Use Quality</h3><p>필요한 자료를 확인하고 적절한 도구를 썼는지 봅니다. 추측으로 고친 코드가 우연히 통과하는 것을 막는 기준입니다.</p></div>
+            <div><h3>Trajectory Compliance</h3><p>정해진 절차와 권한 경계를 지켰는지 확인합니다. 예: 테스트 전 커밋 금지, secret 접근 금지, 승인 없는 배포 금지.</p></div>
+            <div><h3>Response Quality</h3><p>최종 설명이 사실에 근거하고 재현 가능한지 봅니다. agent가 무엇을 바꿨고 어떻게 검증했는지 추적 가능해야 합니다.</p></div>
+          </div>
+          <div class="callout"><strong>리더를 위한 기준:</strong> 작동하는 데모는 agent가 한 번 성공할 수 있음을 보여줄 뿐입니다. eval suite가 통과해야 반복적으로 성공한다고 말할 수 있습니다. 공유 workflow에 넣을 agent는 테스트 커버리지처럼 eval coverage와 명시적 rubric을 가져야 합니다.</div>
+          <div class="takeaway"><span>이 섹션에서 기억할 것</span><p>테스트만으로는 agentic workflow를 충분히 검증할 수 없습니다. 결과와 과정, 두 축의 eval이 있어야 데모가 production discipline으로 바뀝니다.</p></div>
         </section>
 
         <section id="roles" class="content-section">

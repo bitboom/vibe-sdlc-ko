@@ -17,7 +17,8 @@ Kaggle whitepaper **The New SDLC With Vibe Coding**를 한국어로 구조화한
 - Context Engineering: 6가지 context, static/dynamic context, Agent Skills
 - 새로운 SDLC: 요구사항, 설계, 구현, 테스트/QA, 리뷰/배포, 유지보수
 - Factory Model
-- Harness Engineering: Agent = Model + Harness, harness 구성 요소, SDLC 적용
+- Harness Engineering: Agent = Model + Harness, harness 구성 요소, SDLC 적용, 팀 자산으로서 harness
+- Evaluation: tests vs evals, output/trajectory evaluation, production agent 평가 rubric
 - 개발자 역할 변화: Conductor/Orchestrator, The 80% Problem
 - AI 개발의 경제학: TCO, CapEx/OpEx, token burn rate, maintenance/security cost, model routing
 - 시작 가이드: 개인 개발자, 엔지니어링 리더, 조직별 적용 단계
