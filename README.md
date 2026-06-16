@@ -22,6 +22,7 @@ Kaggle whitepaper **The New SDLC With Vibe Coding**를 한국어로 구조화한
 - AI 개발의 경제학: TCO, CapEx/OpEx, token burn rate, maintenance/security cost, model routing
 - 시작 가이드: 개인 개발자, 엔지니어링 리더, 조직별 적용 단계
 - UX polish: 섹션별 takeaway box, 모바일 목차 drawer
+- SEO/OG: canonical URL, Open Graph/Twitter card, 공유용 OG 이미지, favicon
 - 용어집
 
 전체 51페이지 완역은 후속 단계에서 섹션별로 확장합니다. 현재는 핵심 섹션을 원문 기반으로 구조화한 reading guide입니다.
@@ -32,6 +33,8 @@ Kaggle whitepaper **The New SDLC With Vibe Coding**를 한국어로 구조화한
 index.html
 styles.css
 script.js
+assets/og-image.png
+assets/favicon.svg
 .nojekyll
 ```
 

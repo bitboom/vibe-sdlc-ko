@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SDLC">
+  <rect width="64" height="64" rx="18" fill="#0d0d0d"/>
+  <circle cx="47" cy="17" r="8" fill="#18e299" opacity="0.92"/>
+  <path d="M16 42c7-15 16-22 32-24" fill="none" stroke="#18e299" stroke-width="5" stroke-linecap="round"/>
+  <text x="12" y="34" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff">SD</text>
+  <text x="26" y="49" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#ffffff">LC</text>
+</svg>
