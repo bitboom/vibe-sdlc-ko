@@ -23,6 +23,7 @@ Kaggle whitepaper **The New SDLC With Vibe Coding**를 한국어로 구조화한
 - 시작 가이드: 개인 개발자, 엔지니어링 리더, 조직별 적용 단계
 - UX polish: 섹션별 takeaway box, 모바일 목차 drawer
 - SEO/OG: canonical URL, Open Graph/Twitter card, 공유용 OG 이미지, favicon
+- 확장 용어집: SDLC, static/dynamic context, Agent Skills, Factory Model, eval, guardrail/hook/observability 등 원문 용어 병기
 - 용어집
 
 전체 51페이지 완역은 후속 단계에서 섹션별로 확장합니다. 현재는 핵심 섹션을 원문 기반으로 구조화한 reading guide입니다.

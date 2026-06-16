@@ -243,16 +243,27 @@
         <section id="terms" class="content-section">
           <p class="eyebrow">Glossary</p>
           <h2>용어집</h2>
+          <p>원문의 기술 용어는 억지로 번역하지 않고, 한국어 설명과 원문 표현을 함께 둡니다. 실제 팀 문서에서는 영어 용어가 그대로 쓰이는 경우가 많기 때문에 병기하는 편이 오해를 줄입니다.</p>
           <dl class="glossary">
-            <div><dt>Vibe Coding</dt><dd>자연어로 의도를 전달하고 AI가 만든 코드를 빠르게 받아 실험하는 방식. 탐색에는 좋지만 운영 품질에는 검증 장치가 필요합니다.</dd></div>
-            <div><dt>Agentic Engineering</dt><dd>AI 에이전트를 구현 엔진으로 활용하되, 인간이 아키텍처·테스트·제약·리뷰 루프를 설계하는 실무형 접근입니다.</dd></div>
-            <div><dt>Context Engineering</dt><dd>모델이 올바른 결정을 하도록 필요한 맥락을 선별, 압축, 제공하는 기술입니다.</dd></div>
-            <div><dt>Harness Engineering</dt><dd>에이전트가 안전하게 작업하도록 감싸는 테스트, 샌드박스, 권한, 피드백, 배포 체계의 설계입니다.</dd></div>
-            <div><dt>Conductor</dt><dd>개발자가 IDE 안에서 AI와 실시간으로 상호작용하며 세밀하게 방향을 잡는 작업 모드입니다.</dd></div>
-            <div><dt>Orchestrator</dt><dd>여러 에이전트나 백그라운드 작업에 목표를 위임하고, 결과를 검토·통합하는 작업 모드입니다.</dd></div>
-            <div><dt>The 80% Problem</dt><dd>AI가 기능의 대부분은 빠르게 만들지만, 마지막 edge case와 correctness 검증에는 인간의 맥락 지식이 필요하다는 문제입니다.</dd></div>
-            <div><dt>TCO / CapEx / OpEx</dt><dd>AI 개발 비용을 초기 구축 비용과 장기 운영·유지보수 비용으로 나누어 보는 경제적 관점입니다.</dd></div>
-            <div><dt>Model Routing</dt><dd>작업 난이도와 비용에 따라 강한 모델과 작은 모델을 적절히 배치하는 운영 전략입니다.</dd></div>
+            <div><dt>SDLC <span>Software Development Life Cycle</span></dt><dd>소프트웨어 개발 생명주기. 요구사항 정의, 설계, 구현, 테스트, 배포, 운영/유지보수까지 소프트웨어가 만들어지고 변화하는 전체 흐름입니다.</dd></div>
+            <div><dt>Vibe Coding <span>바이브 코딩</span></dt><dd>자연어로 의도를 전달하고 AI가 만든 코드를 빠르게 받아 실험하는 방식. 탐색에는 좋지만 운영 품질에는 검증 장치가 필요합니다.</dd></div>
+            <div><dt>Agentic Engineering <span>에이전틱 엔지니어링</span></dt><dd>AI 에이전트를 구현 엔진으로 활용하되, 인간이 아키텍처·테스트·제약·리뷰 루프를 설계하는 실무형 접근입니다.</dd></div>
+            <div><dt>Context Engineering <span>컨텍스트 엔지니어링</span></dt><dd>모델이 올바른 결정을 하도록 필요한 맥락을 선별, 압축, 제공하는 기술입니다. “좋은 프롬프트”보다 “좋은 정보 환경”에 가깝습니다.</dd></div>
+            <div><dt>Static Context <span>정적 컨텍스트</span></dt><dd>매번 로드되는 규칙과 배경 정보입니다. system instruction, AGENTS.md, 전역 메모리처럼 항상 적용되지만 토큰 비용도 항상 발생합니다.</dd></div>
+            <div><dt>Dynamic Context <span>동적 컨텍스트</span></dt><dd>필요할 때만 로드되는 정보입니다. skill, RAG 문서, tool result, windowed history처럼 작업과 관련될 때만 불러와 신호 대비 비용을 높입니다.</dd></div>
+            <div><dt>Agent Skills <span>에이전트 스킬</span></dt><dd>작업이 맞을 때만 전체 지침과 참고 자료를 로드하는 dynamic context 패턴입니다. 하나의 에이전트가 여러 전문 능력을 갖되 필요한 능력의 비용만 지불하게 합니다.</dd></div>
+            <div><dt>Harness Engineering <span>하네스 엔지니어링</span></dt><dd>에이전트가 안전하게 작업하도록 감싸는 instruction, tool, sandbox, hook, guardrail, observability, feedback loop의 설계입니다.</dd></div>
+            <div><dt>Guardrails <span>가드레일</span></dt><dd>에이전트가 넘으면 안 되는 경계입니다. 보안 규칙, 파일 수정 금지 범위, 테스트 통과 조건, 배포 전 검사 같은 하드 제약을 포함합니다.</dd></div>
+            <div><dt>Hooks <span>훅</span></dt><dd>tool call 전, file edit 후, commit 전처럼 특정 lifecycle 지점에서 실행되는 결정론적 코드입니다. 에이전트가 자주 잊지만 절대 놓치면 안 되는 검사를 자동화합니다.</dd></div>
+            <div><dt>Observability <span>관찰성</span></dt><dd>agent run의 log, trace, cost, latency, eval 결과를 추적하는 능력입니다. 관찰성이 없으면 에이전트가 조용히 drift하는지 알기 어렵습니다.</dd></div>
+            <div><dt>Output Evaluation <span>출력 평가</span></dt><dd>최종 산출물이 요구사항을 만족하는지 보는 평가입니다. 컴파일, 테스트 통과, 응답 품질, 결과 정확성 확인이 여기에 해당합니다.</dd></div>
+            <div><dt>Trajectory Evaluation <span>과정 평가</span></dt><dd>최종 결과뿐 아니라 에이전트가 어떤 tool call과 reasoning 경로를 거쳤는지 평가하는 방식입니다. agentic workflow에서는 과정 자체가 품질 신호입니다.</dd></div>
+            <div><dt>Factory Model <span>팩토리 모델</span></dt><dd>개발자의 산출물을 코드 자체가 아니라 코드를 생산하는 시스템으로 보는 관점입니다. specification, agent, test, quality gate, feedback loop, guardrail이 공장의 구성요소가 됩니다.</dd></div>
+            <div><dt>Conductor <span>컨덕터</span></dt><dd>개발자가 IDE 안에서 AI와 실시간으로 상호작용하며 세밀하게 방향을 잡는 작업 모드입니다.</dd></div>
+            <div><dt>Orchestrator <span>오케스트레이터</span></dt><dd>여러 에이전트나 백그라운드 작업에 목표를 위임하고, 결과를 검토·통합하는 작업 모드입니다.</dd></div>
+            <div><dt>The 80% Problem <span>80% 문제</span></dt><dd>AI가 기능의 대부분은 빠르게 만들지만, 마지막 edge case와 correctness 검증에는 인간의 맥락 지식이 필요하다는 문제입니다.</dd></div>
+            <div><dt>TCO / CapEx / OpEx <span>총소유비용 / 초기비용 / 운영비용</span></dt><dd>AI 개발 비용을 초기 구축 비용과 장기 운영·유지보수 비용으로 나누어 보는 경제적 관점입니다.</dd></div>
+            <div><dt>Model Routing <span>모델 라우팅</span></dt><dd>작업 난이도와 비용에 따라 강한 모델과 작은 모델을 적절히 배치하는 운영 전략입니다.</dd></div>
           </dl>
         </section>
 

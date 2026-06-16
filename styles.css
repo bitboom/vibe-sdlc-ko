@@ -147,6 +147,14 @@ blockquote { margin: 28px 0; padding: 26px 28px; border-left: 4px solid var(--br
 .checklist li { border: 1px solid var(--line); border-radius: 18px; padding: 18px 20px; line-height: 1.7; color: #3d4247; background: white; }
 .glossary { display: grid; gap: 12px; }
 .glossary dt { font-family: var(--mono); font-weight: 600; margin-bottom: 8px; }
+.glossary dt span {
+  display: inline-flex;
+  margin-left: 8px;
+  color: var(--brand-deep);
+  font-size: .78rem;
+  font-weight: 500;
+  white-space: normal;
+}
 .article-footer { border-top: 1px solid var(--line); padding-top: 32px; color: var(--muted); }
 .article-footer a { color: var(--brand-deep); font-weight: 600; }
 
